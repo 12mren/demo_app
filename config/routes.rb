@@ -9,8 +9,13 @@ DemoApp::Application.routes.draw do
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   
   resources :microposts, only: [:create, :destroy]
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
